@@ -1,0 +1,117 @@
+<!-- <p>dashboard works!</p> -->
+<div class="container">
+    <h3>Top 5 open issues, risks, hazards <button class="create-button" (click)="openCreatePopup()">Create</button></h3>
+    
+    <div class="table-container">
+        <!--Issues Table-->
+        <div class="column">
+            <h4>Issues</h4>
+            <div class="row" *ngFor="let issues of issues">
+                <input
+                type="checkbox"
+                (change)="toggleRowSelection(issues)"
+                />
+                <span class="title">{{ issues.value}}</span>
+                <div *ngIf= "issues.isSelected" class="actions">
+                    <button (click)="incrementCount('issues',issues.value)">+</button>&nbsp;
+                    <!-- <button (click)="addEntry()">+</button> -->
+                    <button (click)="deleteRecord('issues',issues.value)">-</button>
+                </div>
+                <span class="count">{{ issues.count}} issues</span>
+                <div *ngIf= "issues.isSelected" class="actions">
+                    <button (click)="openConfirmDeletePopup('issues',issues.value)">&#10005;</button>
+                </div>
+                    <!--
+                <div *ngIf= "issues.isSelected" class="actions">
+                    <button (click)="incrementCount('issues',issues.value)">+</button>
+                     <button (click)="addEntry()">+</button> 
+                    <button (click)="deleteRecord('issues',issues.value)">-</button>
+                    <button (click)="deleteRow('issues',issues.value)">&#10005;</button>
+                </div>-->
+                
+                <span class="percentage"><svg xmlns="http://www.w3.org/2000/svg" class="trending-up-icon" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24"><rect fill="none" height="24" width="24"/><path d="M19.71,9.71L22,12V6h-6l2.29,2.29l-4.17,4.17c-0.39,0.39-1.02,0.39-1.41,0l-1.17-1.17c-1.17-1.17-3.07-1.17-4.24,0L2,16.59 L3.41,18l5.29-5.29c0.39-0.39,1.02-0.39,1.41,0l1.17,1.17c1.17,1.17,3.07,1.17,4.24,0L19.71,9.71z"/></svg>4.4%</span>
+                <!-- <div *ngIf= "issues.isSelected" class="actions">
+                    <button (click)="deleteRow('issues',issues.value)">&#10005;</button>
+                </div> -->
+            </div>
+            <div class="average">Average Score: {{averageIssueScore}}</div>
+        </div>
+        <!--Risks Table-->
+        <div class="column">
+            <h4>Risks</h4>
+            <div class="row" *ngFor="let risks of risks">
+                <input
+                type="checkbox"
+                (change)="toggleRowSelection(risks)"
+                />
+                <span class="title">{{ risks.value}}</span>
+                <div *ngIf= "risks.isSelected" class="actions">
+                    <!-- <button (click)="addEntry()">+</button> -->
+                    <button (click)="incrementCount('risks',risks.value)">+</button>&nbsp;
+                    <button (click)="deleteRecord('risks',risks.value)">-</button>
+                </div>
+                <span class="count">{{ risks.count}} issues</span>
+                <div *ngIf= "risks.isSelected" class="actions">
+                    <button (click)="openConfirmDeletePopup('risks',risks.value)">&#10005;</button>
+                </div>
+                <span class="percentage"><svg xmlns="http://www.w3.org/2000/svg" class="trending-up-icon" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24"><rect fill="none" height="24" width="24"/><path d="M19.71,9.71L22,12V6h-6l2.29,2.29l-4.17,4.17c-0.39,0.39-1.02,0.39-1.41,0l-1.17-1.17c-1.17-1.17-3.07-1.17-4.24,0L2,16.59 L3.41,18l5.29-5.29c0.39-0.39,1.02-0.39,1.41,0l1.17,1.17c1.17,1.17,3.07,1.17,4.24,0L19.71,9.71z"/></svg>4.4%</span>
+    
+            </div>
+            <div class="average">Average Score: {{averageRiskScore}}</div>
+
+        </div>
+        <!--Hazards Table-->
+        <div class="column">
+            <h4>Hazards</h4>
+            <div class="row" *ngFor="let hazards of hazards">
+                <input
+                type="checkbox"
+                (change)="toggleRowSelection(hazards)"
+                />
+                <span class="title">{{ hazards.value}}</span>
+                <div *ngIf= "hazards.isSelected" class="actions">
+                    <button (click)="incrementCount('hazards',hazards.value)">+</button>&nbsp;
+                    <!-- <button (click)="addEntry()">+</button> -->
+                    <button (click)="deleteRecord('hazards',hazards.value)">-</button>
+                </div>
+                <span class="count">{{ hazards.count}} issues</span>
+                <div *ngIf= "hazards.isSelected" class="actions">
+                    <button (click)="openConfirmDeletePopup('hazards',hazards.value)">&#10005;</button>
+                </div>
+                <span class="percentage"><svg xmlns="http://www.w3.org/2000/svg" class="trending-up-icon" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24"><rect fill="none" height="24" width="24"/><path d="M19.71,9.71L22,12V6h-6l2.29,2.29l-4.17,4.17c-0.39,0.39-1.02,0.39-1.41,0l-1.17-1.17c-1.17-1.17-3.07-1.17-4.24,0L2,16.59 L3.41,18l5.29-5.29c0.39-0.39,1.02-0.39,1.41,0l1.17,1.17c1.17,1.17,3.07,1.17,4.24,0L19.71,9.71z"/></svg>4.4%</span>
+                
+            </div>
+            <div class="average">Average Score: {{averageHazardscore}}</div>
+        </div>
+    </div>
+ </div>
+
+ <!-- Popup model -->
+
+<div class="modal" *ngIf= "isPopupOpen">
+    <div class="modal-content">
+        <h4>Create New Entry</h4>
+        <form (ngSubmit)= "addEntry()">
+            <label for="type"> Type: </label>
+            <select id="type" [(ngModel)]= "newEntry.type" name="type" required>
+                <option value="issues">Issues</option>
+                <option value="risks">Risks</option>
+                <option value="hazards">Hazards</option>
+            </select>
+            <label for="name"> Name: </label>
+            <input id="name" type="text" [(ngModel)]= "newEntry.name" name="name" required />
+            &nbsp;&nbsp; <button type="submit" cl> Add </button>
+        </form>
+        <button class="close-button" (click)= "closePopup()">Close</button>
+    </div>
+ </div>
+
+ <div class="modal" *ngIf="isConfirmDeletePopupOpen">
+    <div class="modal-content">
+        <h4>Are you sure you want to delete this row??</h4>
+        <div class="actions">
+            <button (click)="confirmDelete()">Yes</button>
+            &nbsp;&nbsp; <button (click)="cancelDelete()">No</button>
+        </div>
+    </div>
+ </div>
