@@ -1,4 +1,4 @@
-# Dashboard for manageing issues,risks and hazards
+# Dashboard for managing issues,risks and hazards
 
 ## Overview
 This is a Full-stack web application built using Node.js for the backend and Angular for the frontend.The application helps in tracking and managing Issues,Risks and Hazards by allowing users to:
